@@ -1,4 +1,4 @@
-MEMORY
+	MEMORY
 {
 	FLASH (rx) : ORIGIN = 0x00000000, LENGTH = 1M
 	SRAM (rwx) : ORIGIN = 0x20000000, LENGTH = 128K
@@ -15,6 +15,18 @@ SECTIONS
 		*(.rodata.*)
 		_mydata_lma_start = .; /* LMA is equivalent to VMA in this section */
 	} > FLASH
+
+	.eh_frame :
+    	{
+        	*(.eh_frame)
+        	_mydata_lma_start = .; /* LMA is equivalent to VMA in this section */
+    	} > FLASH
+
+	.ARM.exidx :
+    	{
+        	*(.ARM.exidx)
+        	_mydata_lma_start = .; /* LMA is equivalent to VMA in this section */
+    	} > FLASH
 
 	.mydata : AT(_mydata_lma_start) /* tell linker whrere (LMA) this section should be put at */
 	{
