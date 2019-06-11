@@ -163,23 +163,6 @@ void usart1_handler() {
 
 }*/
 
-void *_sbrk(int incr)
-{
-	extern uint8_t _mybss_vma_end; //Defined by the linker script
-	static uint8_t *heap_end = NULL;
-	uint8_t *prev_heap_end;
-
-	if (heap_end == NULL)
-		heap_end = &_mybss_vma_end;
-
-	prev_heap_end = heap_end;
-	if (heap_end + incr > &_mybss_vma_end + HEAP_MAX)
-		return (void *)-1;
-
-	heap_end += incr;
-	return (void *)prev_heap_end;
-}
-
 int main(void)
 {
 	init_usart1();
